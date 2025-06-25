@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
->
+    package="com.example.orrder_app">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.REORDER_TASKS" />
@@ -53,10 +53,21 @@
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
-                <data android:scheme="package" android:path="com.example.demo_app_Order App" />
+                <data android:scheme="package" android:path="com.example.orrder_app App" />
             </intent-filter>
         </activity>
 
+        <!-- ✅ Broadcast Receiver để nhận từ Xibo (Action Bar Intent) -->
+        <receiver
+            android:name=".XiboReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.orderapp.OPEN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+
+        <!-- ❓ Optional: Giữ lại nếu bạn dùng mở từ Xibo app -->
         <receiver
             android:name=".MyReceiver"
             android:exported="true">
