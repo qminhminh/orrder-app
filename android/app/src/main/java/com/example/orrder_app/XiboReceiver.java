@@ -8,10 +8,12 @@ import android.util.Log;
 public class XiboReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
+//        Log.d("XiboReceiver", ": Received intent MY_ACTION!");
+//
+//        Intent i = new Intent(context, MainActivity.class);
+//        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        context.startActivity(i);
         Log.d("XiboReceiver", "Received intent from Xibo!");
-
-        Intent i = new Intent(context, MainActivity.class);
-        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(i);
+        Log.d("XiboReceiver", "Action: " + intent.getAction());
     }
 } 
