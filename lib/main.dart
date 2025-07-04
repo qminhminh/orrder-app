@@ -1,8 +1,9 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:android_intent_plus/android_intent.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:orrder_app/pages/product_detail.dart';
+import 'package:orrder_app/widgets/product_cart.dart';
+import 'package:orrder_app/models/product.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Center(child: Image.asset('assets/images/logo.png', width: 180)),
+      body: Center(child: Image.asset('assets/images/logohhg.webp', width: 180)),
     );
   }
 }
@@ -55,45 +56,54 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class Product {
-  final String title;
-  final String description;
-  final String image;
-  Product({
-    required this.title,
-    required this.description,
-    required this.image,
-  });
-}
-
 final List<Product> products = [
   Product(
+    title: 'COCACOLA',
+    description: 'コカ・コーラの爽やかな味わいを体験しよう。どんな瞬間にもぴったりの定番炭酸飲料です。',
+    image: 'assets/images/cocacola.jpg',
+    price: 180,
+  ),
+  Product(
+    title: 'RAMUNE',
+    description: '日本伝統のラムネ。シュワっとはじける懐かしい味で、見た目も可愛く楽しめる炭酸飲料。',
+    image: 'assets/images/Ramune.jpg',
+    price: 120,
+  ),
+  Product(
+    title: 'MITSUYA CIDER',
+    description: '三ツ矢サイダーは、すっきりとした優しい甘さでリフレッシュに最適な炭酸飲料です。',
+    image: 'assets/images/MITSUYA_CIDER.jpg',
+    price: 140,
+  ),
+  Product(
+    title: 'MUGICHA',
+    description: 'カフェインゼロで、香ばしくさっぱりとした味わいの健康的な麦茶です。',
+    image: 'assets/images/mugicha.png',
+    price: 120,
+  ),
+  Product(
+    title: 'Ito En Risou',
+    description: '完熟トマトをたっぷり使用した、自然な甘みと濃厚な味わいの野菜ジュースです。',
+    image: 'assets/images/ITOENOOIOCHAMATCHAGREENTEA.webp',
+    price: 130,
+  ),
+  Product(
+    title: 'Lipton',
+    description: 'すっきりとした後味で、いつでもどこでも楽しめる爽やかな紅茶です。',
+    image: 'assets/images/lipton.webp',
+    price: 110,
+  ),
+  Product(
+    title: 'Qoo',
+    description: '果実のやさしい甘さが広がるQooジュース。お子さまから大人まで楽しめるフルーツ飲料です。',
+    image: 'assets/images/Qoo.webp',
+    price: 120,
+  ),
+  Product(
     title: 'Lavie 500ml',
-    description:
-        'Lavie mineral water 500ml bottle, pure and convenient for all activities.',
+    description: 'ラヴィー天然水 500ml。コンパクトで持ち運びやすく、日常の水分補給に最適です。',
     image: 'assets/images/shopping.png',
-  ),
-  Product(
-    title: 'Lavie 1.5L',
-    description:
-        'Lavie mineral water 1.5L bottle, perfect for family and office use.',
-    image: 'assets/images/shopping.png',
-  ),
-  Product(
-    title: 'Lavie 350ml',
-    description: 'Lavie mineral water 350ml bottle, compact and easy to carry.',
-    image: 'assets/images/shopping.png',
-  ),
-  Product(
-    title: 'Lavie 5L',
-    description: 'Lavie mineral water 5L bottle, economical for large needs.',
-    image: 'assets/images/shopping.png',
-  ),
-  Product(
-    title: 'Lavie 19L',
-    description:
-        'Lavie mineral water 19L bottle, designed for water dispensers.',
-    image: 'assets/images/shopping.png',
+    price: 100,
   ),
 ];
 
@@ -106,72 +116,53 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text('Order App'),
+        backgroundColor: const Color(0xFF93C43E),
+        title: Image.asset(
+          'assets/images/logohhg.webp',
+          height: MediaQuery.sizeOf(context).width > 600 ? 120 : 98,
+        ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(12.0),
+        padding: const EdgeInsets.only(left: 12, right: 12, bottom: 8),
         child: GridView.builder(
           itemCount: products.length,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 12,
-            mainAxisSpacing: 12,
-            childAspectRatio: 0.7,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: MediaQuery.sizeOf(context).width > 600 ? 4 : 2,
+            crossAxisSpacing: 16,
+            mainAxisSpacing: 16,
+            childAspectRatio: 0.65,
           ),
           itemBuilder: (context, index) {
             final product = products[index];
-            return GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ProductDetailPage(product: product),
+            final screenWidth = MediaQuery.of(context).size.width;
+
+            return Padding(
+              padding: screenWidth > 600
+                  ? EdgeInsets.only(
+                    top: 24,
+                    left: 6,
+                    right: 6,
+                    bottom: 24,
+                  ): EdgeInsets.only(
+                    top: 12,
+                    left: 4,
+                    right: 4,
+                    bottom: 12,
                   ),
-                );
-              },
-              child: Card(
-                elevation: 4,
-                color: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(12),
-                        child: Image.asset(
-                          product.image,
-                          width: 80,
-                          height: 80,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      Text(
-                        product.title,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        product.description,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          fontSize: 13,
-                          color: Colors.black54,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ProductDetailPage(product: product),
+                    ),
+                  );
+                },
+                child: ProductCard(
+                  title: product.title,
+                  description: product.description,
+                  imagePath: product.image,
+                  price: product.price,
                 ),
               ),
             );
@@ -182,69 +173,3 @@ class MyHomePage extends StatelessWidget {
   }
 }
 
-class ProductDetailPage extends StatelessWidget {
-  final Product product;
-  const ProductDetailPage({super.key, required this.product});
-
-  Future<void> _launchXiboClient() async {
-    const packageName = 'uk.org.xibo.client';
-
-    final intent = AndroidIntent(
-      action: 'android.intent.action.MAIN',
-      package: packageName,
-    );
-
-    try {
-      await intent.launch();
-    } on PlatformException {
-      debugPrint('Could not launch application $packageName');
-    }
-  }
-
-  void _handleOrder(BuildContext context) async {
-    // Show success message
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Order successful!'),
-        backgroundColor: Colors.green,
-        duration: Duration(seconds: 10),
-      ),
-    );
-
-    // Wait 10 seconds then launch Xibo
-    await Future.delayed(const Duration(seconds: 1));
-    if (context.mounted) {
-      await _launchXiboClient();
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(product.title)),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(child: Image.asset(product.image, width: 120, height: 120)),
-            const SizedBox(height: 24),
-            Text(
-              product.title,
-              style: Theme.of(context).textTheme.headlineSmall,
-            ),
-            const SizedBox(height: 12),
-            Text(product.description),
-            const Spacer(),
-            Center(
-              child: ElevatedButton(
-                onPressed: () => _handleOrder(context),
-                child: const Text('Add to cart'),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}

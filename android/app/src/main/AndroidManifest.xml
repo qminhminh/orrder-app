@@ -55,6 +55,12 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:scheme="package" android:path="com.example.orrder_app App" />
             </intent-filter>
+
+            <intent-filter>
+                <action android:name="com.example.MY_ACTION" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
         </activity>
 
         <!-- ✅ Broadcast Receiver để nhận từ Xibo (Action Bar Intent) -->
@@ -62,21 +68,11 @@
             android:name=".XiboReceiver"
             android:exported="true">
             <intent-filter>
-                <action android:name="com.orderapp.OPEN" />
+                <action android:name="com.example.MY_ACTION" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
 
-        <!-- ❓ Optional: Giữ lại nếu bạn dùng mở từ Xibo app -->
-        <receiver
-            android:name=".MyReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.example.orrder_app" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data android:scheme="package" android:path="uk.org.xibo.client" />
-            </intent-filter>
-        </receiver>
 
         <meta-data
             android:name="flutterEmbedding"
@@ -88,6 +84,6 @@
             <action android:name="android.intent.action.PROCESS_TEXT"/>
             <data android:mimeType="text/plain"/>
         </intent>
-        <package android:name="uk.org.xibo.client" />
+        <package android:name="com.signage.hrrqwiwifz" />
     </queries>
 </manifest>
