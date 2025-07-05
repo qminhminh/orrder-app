@@ -84,6 +84,6 @@
             <action android:name="android.intent.action.PROCESS_TEXT"/>
             <data android:mimeType="text/plain"/>
         </intent>
-        <package android:name="com.signage.hrrqwiwifz" />
+        <package android:name="com.signage.jzvfxpsoqy" />
     </queries>
 </manifest>

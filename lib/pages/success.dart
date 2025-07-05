@@ -47,7 +47,7 @@ class _SuccessPageState extends State<SuccessPage> {
 
 
   Future<void> _launchXiboClient() async {
-    const packageName = 'com.signage.hrrqwiwifz';
+    const packageName = 'com.signage.jzvfxpsoqy';
 
     final intent = AndroidIntent(
       action: 'android.intent.action.MAIN',
