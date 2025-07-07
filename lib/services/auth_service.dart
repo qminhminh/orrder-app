@@ -10,32 +10,42 @@ class AuthService {
   static DateTime? _expiresAt;
 
   static Future<String?> getToken() async {
-    if (_accessToken != null && _expiresAt != null && DateTime.now().isBefore(_expiresAt!)) {
-      // Token còn hiệu lực
-      return _accessToken;
-    }
+    try {
+      if (_accessToken != null && _expiresAt != null && DateTime.now().isBefore(_expiresAt!)) {
+        // Token is still valid
+        return _accessToken;
+      }
 
-    // Token đã hết hạn hoặc chưa có -> Gọi API để lấy mới
-    final response = await http.post(
-      Uri.parse(_url),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({
-        'grant_type': 'client_credentials',
-        'client_id': _clientId,
-        'client_secret': _clientSecret,
-      }),
-    );
+      // Token has expired or doesn't exist -> Call API to get new one
+      final response = await http.post(
+        Uri.parse(_url),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'grant_type': 'client_credentials',
+          'client_id': _clientId,
+          'client_secret': _clientSecret,
+        }),
+      );
 
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-      _accessToken = data['access_token'];
-      final expiresIn = data['expires_in'] ?? 3600;
-      _expiresAt = DateTime.now().add(Duration(seconds: expiresIn));
+      if (response.statusCode == 200) {
+        try {
+          final data = jsonDecode(response.body);
+          _accessToken = data['access_token'];
+          final expiresIn = data['expires_in'] ?? 3600;
+          _expiresAt = DateTime.now().add(Duration(seconds: expiresIn));
 
-      return _accessToken;
-    } else {
-      print('❌ Failed to fetch token: ${response.statusCode}');
-      print('Body: ${response.body}');
+          return _accessToken;
+        } catch (jsonError) {
+          print('❌ JSON parsing error: $jsonError');
+          return null;
+        }
+      } else {
+        print('❌ Failed to fetch token: ${response.statusCode}');
+        print('Body: ${response.body}');
+        return null;
+      }
+    } catch (error) {
+      print('❌ Network or general error: $error');
       return null;
     }
   }
